@@ -5,11 +5,20 @@ import displayButtons from './displayButtons.js';
 import getElement from './getElement.js';
 
 const title = getElement('.section-title h1');
+const btnContainer = getElement('.btn-container');
+let index = 0;
+let pages = [];
+
+const setupUI = () => {
+  displayFollowers(pages[index]);
+  displayButtons(btnContainer, pages, index);
+};
 
 const init = async () => {
   const followers = await fetchFollowers();
   title.textContent = 'pagination';
-  displayFollowers(followers);
+  pages = paginate(followers);
+  setupUI();
 };
 
 window.addEventListener('load', init);
